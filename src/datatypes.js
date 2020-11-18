@@ -105,6 +105,25 @@ function sortByNameLength(a, b) {
   return a.length - b.length;
 }
 
+// Objects
+const hogwartsStudent = {
+  name: 'Harry Potter',
+  age: 11,
+  isWizard: true,
+  pet: 'Owl',
+  petName: 'Hedwig',
+};
+
+function introduceWizard(wizard) {
+  if (wizard?.isWizard) {
+    return `${wizard?.name} is ${wizard?.age} years old. His pets name is ${wizard?.petName}.`;
+  } else {
+    return `${wizard?.name} is no wizard!`;
+  }
+}
+
+console.log(introduceWizard(hogwartsStudent));
+
 // Array of objects
 const spells = [
   {
