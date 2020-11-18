@@ -117,60 +117,134 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"index.js":[function(require,module,exports) {
-var harry = {
-  name: 'Harry Potter',
-  housePoints: 30
-};
-harry.housePoints = 40;
-harry.animal = 'Owl';
-console.log(harry);
-var ron = {
-  name: 'Ron Weasly',
-  housePoints: 10
-};
-var student = {
-  name: 'Some Dude',
-  housePoints: 3
-};
-var hogwarts = {
-  headMaster: 'Albus Dumbledore',
-  fourHouseOfHogwarts: [{
-    name: 'Gryffindor',
-    houseHead: 'Minerva McGonnagall',
-    students: [harry, ron, student]
-  }, {
-    name: 'Hufflepuff',
-    houseHead: 'Pomona Spout',
-    students: [student, student]
-  }, {
-    name: 'Ravenclaw',
-    houseHead: 'Filius Flitwick',
-    students: [student, student, student]
-  }, {
-    name: 'Slytherin',
-    houseHead: 'Severus Snape',
-    students: [student]
-  }]
-}; // calculate the house points per house
+})({"datatypes.js":[function(require,module,exports) {
+// Declaring variables with let
+var name = 'Harry';
+name = 'Ron'; //Declaring constants with const
 
-function calculateHousePoints(school, houseName) {
-  // Find the house in the school
-  var house = school.fourHouseOfHogwarts.find(function (house) {
-    return house.name === houseName;
-  });
-  console.log(house); // calculate points
+var firstName = 'Ron';
+var lastName = 'Weasley';
+var age = 11; // Strings
 
-  var housePoints = house.students.reduce(function (acculumator, currentStudent) {
-    return acculumator + currentStudent.housePoints;
-  }, 0);
-  return housePoints;
+var school = "hogwarts"; // Difference between single quotes and back ticks
+
+console.log(name + ' is ' + age + ' years old.');
+console.log("".concat(name, " is ").concat(++age, " years old."));
+console.log(name.length); // Numbers
+
+var number = 2;
+var gravitation = 9.81; // m/s^2
+
+var PI = Math.PI;
+console.log(PI);
+number = 2 + 1;
+console.log(number); //Math Object and differences in rounding
+
+var someNumber = 4.48;
+console.log(Math.round(someNumber));
+console.log(Math.ceil(someNumber));
+console.log(Math.floor(someNumber)); // string concatination vs mathematic operations
+
+console.log(name + 8);
+console.log(name - 8);
+var stringNumber = '12.98';
+console.log(Number(stringNumber) + 7);
+console.log(parseFloat(stringNumber) + 7); //Booleans
+
+var isMagician = false;
+isMagician = true;
+var wand = 'Eldaward';
+console.log(wand); // Arrays and array methods
+
+var weasleys = ['Ginny', 'Ron', 'Fred', 'George', 'Percy', 'Charly', 'Bill']; // Add a new entry to end of array
+
+weasleys.push('Molly');
+weasleys.push('Arthur');
+weasleys.push('Harry'); // Remove last entry from array
+
+weasleys.pop();
+console.log(weasleys); // I know which index to look for
+
+console.log(weasleys[1]); // search for index of Percy
+
+console.log(weasleys.indexOf('Percy'));
+console.log(weasleys[4]);
+weasleys.push('Bill');
+console.log(weasleys); // Look for something in an array and return first value that matches
+
+console.log(weasleys.find(function (familyMember) {
+  return familyMember === 'Bill';
+})); // Checks if at least one item in an array passes the test and returns true or false
+
+console.log(weasleys.some(function (familyMember) {
+  return familyMember === 'Harry';
+}));
+var potters = ['Harry', 'Lilly', 'James']; // Nested Array
+
+var magicFamilies = [weasleys, potters];
+console.log(magicFamilies);
+console.log(magicFamilies[1][2]); // Spread operator to spread to arrays into a new one
+
+var magicParty = [].concat(weasleys, potters);
+console.log(magicParty); // Look for index of an item in an array
+
+var whereIsHarry = magicParty.indexOf('Harry');
+console.log(whereIsHarry); // Removes 1 item from array at index of "whereIsHarry"
+
+magicParty.splice(whereIsHarry, 1);
+console.log(magicParty); //Adds several items to the beginning of array
+
+magicParty.unshift('Hedwig', 'Pig'); // Removes first item of an array
+
+magicParty.shift();
+console.log(magicParty); // Sorts an array
+
+var newArray = weasleys.sort(sortByNameLength);
+console.log(newArray);
+
+function sortByNameLength(a, b) {
+  return a.length - b.length;
+} // Array of objects
+
+
+var spells = [{
+  spell: 'Alohomora',
+  description: 'Unlocking charm'
+}, {
+  spell: 'Bombarda',
+  description: 'Exploding charm'
+}, {
+  spell: 'Engorgio',
+  description: 'Engorgement charm'
+}, {
+  spell: 'Expecto Patronum',
+  description: 'Patronus charm'
+}, {
+  spell: 'Expelliarmus',
+  description: 'Disarming charm'
+}, {
+  spell: 'Finite Incantatem',
+  description: 'General counter-spell'
+}, {
+  spell: 'Immobulus',
+  description: 'Freezing charm'
+}, {
+  spell: 'Incendio',
+  description: 'Fire-making spell'
+}, {
+  spell: 'Lumos',
+  description: 'Wand-lighting charm'
+}, {
+  spell: 'Petrificus Totalus',
+  description: 'Full Body-Bind Curse'
+}];
+
+function castSpell(spells) {
+  var index = Math.floor(Math.random() * spells.length);
+  return "Harry casts: ".concat(spells[index].spell.toUpperCase(), "!");
 }
 
-console.log(calculateHousePoints(hogwarts, 'Gryffindor'));
-console.log(calculateHousePoints(hogwarts, 'Hufflepuff'));
-console.log(calculateHousePoints(hogwarts, 'Ravenclaw'));
-console.log(calculateHousePoints(hogwarts, 'Hufflepuff'));
+console.log(castSpell(spells));
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -375,5 +449,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/src.e31bb0bc.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","datatypes.js"], null)
+//# sourceMappingURL=/datatypes.095e922f.js.map
