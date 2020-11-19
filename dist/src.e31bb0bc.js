@@ -118,13 +118,24 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"index.js":[function(require,module,exports) {
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 var harry = {
   name: 'Harry Potter',
   housePoints: 30
 };
 harry.housePoints = 40;
 harry.animal = 'Owl';
-console.log(harry);
 var ron = {
   name: 'Ron Weasly',
   housePoints: 10
@@ -135,7 +146,7 @@ var student = {
 };
 var hogwarts = {
   headMaster: 'Albus Dumbledore',
-  fourHouseOfHogwarts: [{
+  fourHousesOfHogwarts: [{
     name: 'Gryffindor',
     houseHead: 'Minerva McGonnagall',
     students: [harry, ron, student]
@@ -152,25 +163,48 @@ var hogwarts = {
     houseHead: 'Severus Snape',
     students: [student]
   }]
-}; // calculate the house points per house
+};
 
-function calculateHousePoints(school, houseName) {
-  // Find the house in the school
-  var house = school.fourHouseOfHogwarts.find(function (house) {
+var findHouse = function findHouse(school, houseName) {
+  return school.fourHousesOfHogwarts.find(function (house) {
     return house.name === houseName;
   });
-  console.log(house); // calculate points
+};
 
-  var housePoints = house.students.reduce(function (acculumator, currentStudent) {
-    return acculumator + currentStudent.housePoints;
+var calculateHousePoints = function calculateHousePoints(school, houseName) {
+  return findHouse(school, houseName).students.reduce(function (accumulator, currentStudent) {
+    return accumulator + currentStudent.housePoints;
   }, 0);
-  return housePoints;
-}
+};
 
 console.log(calculateHousePoints(hogwarts, 'Gryffindor'));
 console.log(calculateHousePoints(hogwarts, 'Hufflepuff'));
 console.log(calculateHousePoints(hogwarts, 'Ravenclaw'));
-console.log(calculateHousePoints(hogwarts, 'Hufflepuff'));
+console.log(calculateHousePoints(hogwarts, 'Hufflepuff')); //const listOfHousePoints = [];
+// for (let house of hogwarts.fourHousesOfHogwarts) {
+//   listOfHousePoints.push({
+//     name: house.name,
+//     points: calculateHousePoints(hogwarts, house.name),
+//   });
+// }
+// Modern functional approach
+
+var listOfHousePoints = hogwarts.fourHousesOfHogwarts.map(function (house) {
+  return {
+    name: house.name,
+    points: calculateHousePoints(hogwarts, house.name)
+  };
+});
+console.log(listOfHousePoints);
+
+var housesSortedByPoints = _toConsumableArray(listOfHousePoints);
+
+var winningHouse = housesSortedByPoints.sort(sortHouses).reverse()[0];
+console.log(winningHouse);
+
+function sortHouses(houseA, houseB) {
+  return houseA.points - houseB.points;
+}
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -199,7 +233,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51365" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52309" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
